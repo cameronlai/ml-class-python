@@ -89,7 +89,6 @@ if __name__ == "__main__":
 
     # Note: You have to complete the code in function plotData
     plotData(x,y, label='Training data')
-    #plt.show(block=False)
 
     raw_input('Program paused. Press enter to continue')
 
@@ -112,7 +111,6 @@ if __name__ == "__main__":
 
     plt.plot(X[:,1], np.dot(X,theta), '-', label='Linear Regression' )
     plt.legend()
-    #plt.show(block=False)
     
     predict1 = np.dot([1, 3.5], theta)[0]
     print('For population = 35,000, we predict a profit of %f' % (predict1*10000));

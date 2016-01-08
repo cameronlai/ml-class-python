@@ -32,9 +32,6 @@ def featureNormalize(X):
     #               standard deviation of each feature and divide
     #               each feature by it's standard deviation, storing
     #               the standard deviation in sigma. 
-    mu = np.mean(X, axis=0)
-    sigma = np.std(X, axis=0)
-    X_norm = (X - mu) / sigma
     # ===========================================
     return X_norm, mu, sigma
     
@@ -44,8 +41,6 @@ def computeCostMulti(X, y, theta):
     # ============= YOUR CODE HERE =============
     # Instructions: Compute the cost of a particular choice of theta
     #               You should set J to the cost.
-    Jdiff = np.dot(X, theta) - y
-    J = np.sum(np.power(Jdiff, 2)) / (2*m)
     # ===========================================
     return J
 
@@ -55,8 +50,6 @@ def gradientDescentMulti(X, y, theta, alpha, num_iters):
     for i in range(num_iters):
         # ============= YOUR CODE HERE =============
         # Instructions: Perform a single gradient step on the parameter vector theta. 
-        sumDiff = np.dot(np.transpose(X), np.dot(X, theta) - y)
-        theta = theta - alpha * sumDiff / m
         # ===========================================
 
         # Save the cost J in every iteration 
@@ -67,8 +60,6 @@ def normalEqn(X, y):
     theta = np.zeros((X.shape[1], 1))
     # ============= YOUR CODE HERE =============
     # Instructions: Complete the code to compute the closed form solution to linear regression and put the result in theta.
-    matrix_inv = np.linalg.inv(np.dot(np.transpose(X), X))
-    theta = np.dot(np.dot(matrix_inv, np.transpose(X)), y)
     # ===========================================
     return theta
 
@@ -124,9 +115,6 @@ if __name__ == "__main__":
 
     # ============= YOUR CODE HERE =============
     # Instructions: Estimate the price of a 1650 sq-ft, 3 br house
-    x = np.array([1, 1650.0, 3.0])
-    x[1:3] = (x[1:3] - mu) / sigma
-    price = np.dot(x, theta)[0]
     # ===========================================
     #
     print('Predicted price of a 1650 sq-ft, 3 br house (using gradient descent):\n $%f', price)
@@ -151,8 +139,6 @@ if __name__ == "__main__":
 
     # ============= YOUR CODE HERE =============
     # Instructions: Estimate the price of a 1650 sq-ft, 3 br house
-    x = np.array([1, 1650.0, 3.0])
-    price = np.dot(x, theta)[0]
     # ===========================================
 
     print('Predicted price of a 1650 sq-ft, 3 br house (using gradient descent):\n $%f', price)
