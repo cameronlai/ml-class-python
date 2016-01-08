@@ -9,6 +9,7 @@ pattern2 = '# ==========================================='
 for d in os.listdir('.'):
     if os.path.isdir(d):
         for f in os.listdir(d):
+            print(f)
             src = d + '/' + f
             dst = '../skeletons/' + src
             with open(src, 'r') as f:
@@ -17,8 +18,6 @@ for d in os.listdir('.'):
             with open(dst, 'w') as f:
                 code_flag = False
                 for line in read_data:
-                    print(line)
-                    print(code_flag)
                     if pattern1 in line:
                         code_flag = True
                     elif pattern2 in line:
