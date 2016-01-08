@@ -113,6 +113,7 @@ if __name__ == "__main__":
     print('Theta computed from gradient descent:');
     print(theta)
 
+    price = 0
     # ============= YOUR CODE HERE =============
     # Instructions: Estimate the price of a 1650 sq-ft, 3 br house
     # ===========================================
@@ -137,6 +138,7 @@ if __name__ == "__main__":
 
     theta = normalEqn(X, y)
 
+    price = 0
     # ============= YOUR CODE HERE =============
     # Instructions: Estimate the price of a 1650 sq-ft, 3 br house
     # ===========================================
