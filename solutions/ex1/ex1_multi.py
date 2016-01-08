@@ -129,7 +129,7 @@ if __name__ == "__main__":
     price = np.dot(x, theta)[0]
     # ===========================================
     #
-    print('Predicted price of a 1650 sq-ft, 3 br house (using gradient descent):\n $%f', price)
+    print('Predicted price of a 1650 sq-ft, 3 br house (using gradient descent):\n %f' % price)
 
     raw_input('Program paused. Press enter to continue')
     
@@ -155,4 +155,4 @@ if __name__ == "__main__":
     price = np.dot(x, theta)[0]
     # ===========================================
 
-    print('Predicted price of a 1650 sq-ft, 3 br house (using gradient descent):\n $%f', price)
+    print('Predicted price of a 1650 sq-ft, 3 br house (using gradient descent):\n %f' % price)
