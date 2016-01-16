@@ -10,57 +10,7 @@ from sklearn import linear_model
 #  ------------
 # 
 #  This file contains code that helps you get started on the
-#  linear exercise. You will need to complete the following functions 
-#  in this exericse:
-#
-#     gradientDescentMulti
-#     computeCostMulti
-#     featureNormalize
-#     normalEqn
-
-# ==================== All function declaration ====================
-
-def featureNormalize(X):
-    X_norm = X
-    mu = np.zeros((1, X.shape[1]))
-    sigma = np.zeros((1, X.shape[1]))
-    # ============= YOUR CODE HERE =============
-    # Instructions: First, for each feature dimension, compute the mean
-    #               of the feature and subtract it from the dataset,
-    #               storing the mean value in mu. Next, compute the 
-    #               standard deviation of each feature and divide
-    #               each feature by it's standard deviation, storing
-    #               the standard deviation in sigma. 
-    # ===========================================
-    return X_norm, mu, sigma
-    
-def computeCostMulti(X, y, theta):
-    m = y.shape[0]
-    J = 0
-    # ============= YOUR CODE HERE =============
-    # Instructions: Compute the cost of a particular choice of theta
-    #               You should set J to the cost.
-    # ===========================================
-    return J
-
-def gradientDescentMulti(X, y, theta, alpha, num_iters):
-    m = y.shape[0]
-    J_history = np.zeros((num_iters, 1))
-    for i in range(num_iters):
-        # ============= YOUR CODE HERE =============
-        # Instructions: Perform a single gradient step on the parameter vector theta. 
-        # ===========================================
-
-        # Save the cost J in every iteration 
-        J_history[i] = computeCost(X, y, theta)
-    return theta, J_history
-
-def normalEqn(X, y):
-    theta = np.zeros((X.shape[1], 1))
-    # ============= YOUR CODE HERE =============
-    # Instructions: Complete the code to compute the closed form solution to linear regression and put the result in theta.
-    # ===========================================
-    return theta
+#  linear exercise. You will need to complete short sections of code within the code below
 
 if __name__ == "__main__":
     plt.close('all')
