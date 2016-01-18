@@ -63,7 +63,7 @@ if __name__ == "__main__":
     plotData(X, y, ['y = 1', 'y = 0'])
 
     plt.xlabel('Microchip Test 1')
-    plt.xlabel('Microchip Test 2')
+    plt.ylabel('Microchip Test 2')
     plt.legend()
 
     # ==================== Part 1: Regularized Logistic Regression ====================
@@ -87,7 +87,7 @@ if __name__ == "__main__":
 
     initial_theta = np.zeros((X.shape[1], 1))
 
-    labmda_val = 1
+    lambda_val = 1
     
     fmin_ret = fmin_ncg(lambda t : (costFunctionReg(t, X, y, lambda_val)[0]), initial_theta, lambda t : (costFunctionReg(t, X, y, lambda_val)[1]), maxiter=400, full_output=True)
     
