@@ -8,10 +8,10 @@ The repo not only ports the Octave code into Python as demonstration. It also il
 
 # Dependencies
 
-numpy
-scipy
-matplotlib
-scikit-learn
+- numpy
+- scipy
+- matplotlib
+- scikit-learn
 
 # Repo structure
 
