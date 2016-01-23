@@ -10,7 +10,7 @@ from ex3 import *
 #  ------------
 # 
 #  This file contains code that helps you get started on the
-#  linear exercise. You will need to complete the following functions 
+#  neural network exercise. You will need to complete the following functions 
 #  in this exericse:
 #
 #     predict
@@ -80,9 +80,9 @@ if __name__ == "__main__":
     # =================== Part 3: Implement Predict ===================
 
     pred = predict(Theta1, Theta2, X)
+    pred = pred.reshape(-1, 1)
 
-    print('Training Set Accuracy: %f\n', np.mean(pred == y) * 100);
-
+    print('Training Set Accuracy: %f' % (np.mean(pred == y) * 100));
     raw_input('Program paused. Press enter to continue')
 
     rp = np.random.permutation(m)
@@ -92,7 +92,7 @@ if __name__ == "__main__":
         data = X[i, :].reshape(1, -1)
         displayData(data)
         pred = predict(Theta1, Theta2, data)
-        print('\nNeural Network Prediction: %d (digit %d)\n', pred[0][0], np.mod(pred, 10)[0][0]);
+        print('Neural Network Prediction: %d (digit %d)' % (pred[0][0], np.mod(pred, 10)[0][0]));
 
         raw_input('Program paused. Press enter to continue')
     

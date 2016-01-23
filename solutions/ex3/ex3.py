@@ -157,5 +157,6 @@ if __name__ == "__main__":
     # =================== Part 3: Vectorize Logistic Regression ===================
 
     pred = predictOneVsAll(all_theta, X)
+    pred = pred.reshape(-1, 1)
 
     print('Training Set Accuracy: %f' % (np.mean(pred == y) * 100))
