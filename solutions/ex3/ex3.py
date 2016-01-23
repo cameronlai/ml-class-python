@@ -154,7 +154,7 @@ if __name__ == "__main__":
 
     raw_input('Program paused. Press enter to continue')
 
-    # =================== Part 2: Vectorize Logistic Regression ===================
+    # =================== Part 3: Vectorize Logistic Regression ===================
 
     pred = predictOneVsAll(all_theta, X)
 
