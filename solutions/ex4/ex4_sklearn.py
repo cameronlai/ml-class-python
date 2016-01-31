@@ -2,9 +2,9 @@ import numpy as np
 import matplotlib.pyplot as plt
 import scipy.io as sio
 from sklearn.neural_network import MLPClassifier
-from ex3 import *
+from ex4_utility import *
 
-## Machine Learning Online Class - Exercise 3: Neural Network - One-vs-all with sci-kit learn
+## Machine Learning Online Class - Exercise 4: Neural Network Learning
 
 #  Instructions
 #  ------------
@@ -29,7 +29,7 @@ if __name__ == "__main__":
     
     print('Loading and Visualizing Data ...')
 
-    data_file = '../../data/ex3/ex3data1.mat'
+    data_file = '../../data/ex4/ex4data1.mat'
     mat_content = sio.loadmat(data_file)
 
     X = mat_content['X']
@@ -77,22 +77,19 @@ if __name__ == "__main__":
 
     raw_input('Program paused. Press enter to continue')
 
-    # =================== Part 3: Implement Predict ===================
+    # =================== Part 3: Visualize Weights ===================
+
+    print('Visualizing Neural Network...')
+
+    plt.figure()
+    displayData(np.transpose(clf.coefs_[0]))
+
+    raw_input('Program paused. Press enter to continue')
+
+    # =================== Part 4: Implement Predict ===================
 
     print('Training Set Accuracy: %f' % clf.score(X, y.ravel()));
 
     raw_input('Program paused. Press enter to continue')
-
-    rp = np.random.permutation(m)
-
-    for i in rp:
-        print('Displaying Example Image')
-        data = X[i, :].reshape(1, -1)
-        displayData(data)
-        pred = clf.predict(data)
-        print('Neural Network Prediction: %d (digit %d)' % (pred[0], np.mod(pred, 10)[0]));
-
-        raw_input('Program paused. Press enter to continue')
-    
 
 
