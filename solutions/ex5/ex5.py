@@ -186,8 +186,8 @@ if __name__ == "__main__":
     plt.legend('Train', 'Cross Validation')
     plt.xlabel('Number of training examples')
     plt.ylabel('Error')
-    plt.plot(np.arange(m), error_train, label='Train error')
-    plt.plot(np.arange(m), error_val, label='Validation error')
+    plt.plot(np.arange(1, m+1), error_train, label='Train error')
+    plt.plot(np.arange(1, m+1), error_val, label='Validation error')
     plt.legend()
 
     print('# Training Examples\tTrain Error\tCross Validation Error')
@@ -233,11 +233,10 @@ if __name__ == "__main__":
 
     plt.figure()
     plt.title('Polynomial Regression Fit (lambda = %f)' % lambda_val)
-    plt.legend('Train', 'Cross Validation')
     plt.xlabel('Number of training examples')
     plt.ylabel('Error')
-    plt.plot(np.arange(m), error_train, label='Train error')
-    plt.plot(np.arange(m), error_val, label='Validation error')
+    plt.plot(np.arange(1, m+1), error_train, label='Train error')
+    plt.plot(np.arange(1, m+1), error_val, label='Validation error')
     plt.legend()
 
     print('# Training Examples\tTrain Error\tCross Validation Error')
@@ -263,6 +262,8 @@ if __name__ == "__main__":
         print('  \t%d\t\t%f\t%f' % (i+1, error_train[i], error_val[i]))
 
     raw_input('Program paused. Press enter to continue')
+
+    plt.close('all')
     
 
 
