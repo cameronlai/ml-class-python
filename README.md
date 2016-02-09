@@ -1,17 +1,18 @@
 # Overview
 
-This repo includes skeletons, data and solutions to the Coursera Machine Learning course by Andrew Ng.
+This repo includes skeletons, data and solutions to the 
+[Coursera Machine Learning Course](https://www.coursera.org/learn/machine-learning)
+by Andrew Ng.
 
-The course was taught in Octave and this repo uses Python instead. This is to help others to visualize their machine learning software solutions in a general purpose language.
-
-The repo not only ports the Octave code into Python as demonstration. It also illustrates how machine learning algorithms can be used with the scikit-learn library
+The course was taught in Octave and this repo uses Python instead. This is to help others to visualize their machine learning software solutions in a general purpose language. It also serves as an example for the common libraries used in scientific computing and machine learning. Examples are shown how machine learning algorithms can be used with the scikit-learn library.
 
 # Dependencies
 
-- numpy
-- scipy
-- matplotlib
-- scikit-learn
+- [numpy](http://www.numpy.org/)
+- [scipy](http://www.scipy.org/)
+- [matplotlib](http://matplotlib.org/)
+- [scikit-learn](http://scikit-learn.org/)
+- [nltk](http://www.nltk.org/)
 
 # Repo structure
 
