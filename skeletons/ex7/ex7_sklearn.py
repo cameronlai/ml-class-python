@@ -3,7 +3,9 @@ import matplotlib.pyplot as plt
 import matplotlib.image as mpimg
 import matplotlib.cm as cm
 import scipy.io as sio
-from ex7_utility import *
+from sklearn.cluster import KMeans
+from ex7 import findClosestCentroids, computeCentroids
+from ex7_utility import plotProgresskMeans
 
 ## Machine Learning Online Class - Exercise 7: Principle Component Analysis and K-Means Clustering
 
@@ -11,72 +13,41 @@ from ex7_utility import *
 #  ------------
 # 
 #  This file contains code that helps you get started on the
-#  exercise. You will need to complete the following functions 
-#  in this exericse:
-#
-#     computeCentroids
-#     findClosestCentroids
-#     kMeansInitCentroids
+#  clustering exercise. 
+#  You will need to complete a short section of code to perform 
+#  clustering with scikit-learn library
 #
 
-# ==================== All function declaration ====================
-
-def findClosestCentroids(X, centroids):
-    m = X.shape[0]
-    K = centroids.shape[0]
-    idx = np.zeros((m,1), dtype=int)
-    # ============= YOUR CODE HERE =============
-    # Instructions: Go over every example, find its closest centroid, and store
-    #               the index inside idx at the appropriate location.
-    #               Concretely, idx(i) should contain the index of the centroid
-    #               closest to example i. Hence, it should be a value in the 
-    #               range 1..K
-    # ===========================================
-    return idx
-
-def computeCentroids(X, idx, K):
+def runkMeans_sklearn(X, initial_centroids = None, max_iters= 0, plot_progress = False, input_K = 0):
     m, n = X.shape
-    centroids = np.zeros((K, n))
-    # ============= YOUR CODE HERE =============
-    # Instructions: Go over every centroid and compute mean of all points that
-    #               belong to it. Concretely, the row vector centroids(i, :)
-    #               should contain the mean of the data points assigned to
-    #               centroid i.
-    # ===========================================
-    return centroids
-
-def runkMeans(X, initial_centroids, max_iters, plot_progress = False):
-    m, n = X.shape
-    K = initial_centroids.shape[0]
-    centroids = initial_centroids
-    previous_centroids = centroids
+    if initial_centroids is None:
+        K = input_K
+    else:
+        K = initial_centroids.shape[0]
     idx = np.zeros((m,1))
 
-    for i in xrange(max_iters):
-        print('K-Means iteration %d/%d...\n' % (i+1, max_iters))
-        idx = findClosestCentroids(X, centroids)
-        if plot_progress:
-            plotProgresskMeans(X, centroids, previous_centroids, idx, K, i+1)
-            previous_centroids = centroids
-            raw_input('Press enter to continue')
-        
-        centroids = computeCentroids(X, idx, K)
-    return centroids, idx
-
-def kMeansInitCentroids(X, K):
-    m, n = X.shape
-    centroids = np.zeros((K, n))
+    kmeans = None
     # ============= YOUR CODE HERE =============
-    # Instructions: You should set centroids to randomly chosen examples from
-    #               the dataset X
+    # Instructions: Perform K Means with sci-kit library
+    #               Initialize with the given points
+    #               If initial_centroids is an integer, then use random
     # ===========================================
-    return centroids
+    if kmeans is None:
+        sys.exit('K Means model not initialized')
+        
+    centroids = kmeans.cluster_centers_
+    idx = kmeans.labels_
+    
+    if plot_progress:
+        plotProgresskMeans(X, centroids, initial_centroids, idx, K, max_iters)
+
+    return centroids, idx
 
 if __name__ == "__main__":
     plt.close('all')
     plt.ion() # interactive mode
 
-    # ==================== Part 1: Find Closest Centroids ====================
+    # ==================== Part 1: Perform K Means ====================
     
     print('Finding closest centroids.')
 
@@ -117,7 +88,13 @@ if __name__ == "__main__":
 
     max_iters = 10
 
-    centroids, idx = runkMeans(X, initial_centroids, max_iters, True)
+    print('K-means starting point')
+    plotProgresskMeans(X, initial_centroids, initial_centroids, idx, K, 0)
+
+    raw_input('Press enter to continue')
+
+    centroids, idx = runkMeans_sklearn(X, initial_centroids, max_iters, True)
+
     print('K-Means Done.')
 
     raw_input('Program paused. Press enter to continue')
@@ -136,9 +113,7 @@ if __name__ == "__main__":
     K = 16
     max_iters = 10
 
-    initial_centroids = kMeansInitCentroids(X, K)
-
-    centroids, idx = runkMeans(X, initial_centroids, max_iters)
+    centroids, idx = runkMeans_sklearn(X, max_iters=max_iters, input_K = K)
 
     raw_input('Program paused. Press enter to continue')
 
@@ -146,7 +121,8 @@ if __name__ == "__main__":
     
     print('Applying K-Means to compress an image.')
 
-    idx = findClosestCentroids(X, centroids)
+    # Can use the idx trained from K Means instead of finding them again
+    #idx = findClosestCentroids(X, centroids)
 
     X_recovered = centroids[idx,:]
     

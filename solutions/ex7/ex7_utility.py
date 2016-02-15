@@ -17,7 +17,7 @@ def plotProgresskMeans(X, centroids, previous, idx, K, i):
         tmp_centroids = np.vstack((previous[j, :], centroids[j,:]))
         plt.plot(tmp_centroids[:,0], tmp_centroids[:,1], color='black')
 
-    plt.title('Iteration number %d' % (i+1))
+    plt.title('Iteration number %d' % (i))
 
 def drawLine(p1, p2, formatString):
     plt.plot([p1[0], p2[0]], [p1[1], p2[1]], formatString)

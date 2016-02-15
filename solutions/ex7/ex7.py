@@ -66,7 +66,7 @@ def runkMeans(X, initial_centroids, max_iters, plot_progress = False):
         print('K-Means iteration %d/%d...\n' % (i+1, max_iters))
         idx = findClosestCentroids(X, centroids)
         if plot_progress:
-            plotProgresskMeans(X, centroids, previous_centroids, idx, K, i)
+            plotProgresskMeans(X, centroids, previous_centroids, idx, K, i+1)
             previous_centroids = centroids
             raw_input('Press enter to continue')
         
@@ -174,3 +174,4 @@ if __name__ == "__main__":
     plt.title('Compressed, with %d colors.' % K)
 
     raw_input('Program paused. Press enter to continue')
+    plt.close('all')
