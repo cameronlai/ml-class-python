@@ -82,8 +82,6 @@ def dataset3Params(X, y, Xval, yval):
             score = model.score(Xval, yval)
             print(score)
             if score > max_score:
-                print('here')
-                print(score)
                 max_score = score
                 C = tC
                 sigma = tSigma
