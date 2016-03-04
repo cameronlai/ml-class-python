@@ -10,6 +10,9 @@ for d in os.listdir('.'):
     if os.path.isdir(d):
         for f in os.listdir(d):
             print(f)
+            if '.pyc' in f:
+                print('Skip pyc file')
+                continue
             src = d + '/' + f
             dst = '../skeletons/' + src
             with open(src, 'r') as f:
