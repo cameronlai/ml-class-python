@@ -61,11 +61,7 @@ if __name__ == "__main__":
     Xval = mat_content['Xval']
     yval = mat_content['yval']
 
-    plt.plot(X[:,0], X[:,1], 'bx')
-    plt.xlim([0,30])
-    plt.ylim([0,30])
-    plt.xlabel('Latency (ms)');
-    plt.ylabel('Throughput (mb/s)');
+    plot_datapoints(X)
 
     raw_input('Program paused. Press enter to continue')
 

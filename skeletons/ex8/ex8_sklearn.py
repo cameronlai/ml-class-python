@@ -1,7 +1,13 @@
+import sys
 import numpy as np
 import matplotlib.pyplot as plt
 import scipy.io as sio
 from ex8_utility import *
+from sklearn.preprocessing import StandardScaler
+from sklearn import grid_search
+from sklearn import svm
+from sklearn.metrics import f1_score
+from scipy import stats
 
 ## Machine Learning Online Class - Exercise 8: Anomaly Detection and Collaborative Filtering
 
@@ -27,38 +33,33 @@ def estimateGaussian(X):
     #               In particular, mu(i) should contain the mean of
     #               the data for the i-th feature and sigma2(i)
     #               should contain variance of the i-th feature.
-    mu = X.mean(axis=0).reshape(-1,1)
-    sigma2 = X.var(axis=0).reshape(-1,1)
     # ===========================================
     return mu, sigma2
 
-def selectThreshold(yval, pval):
-    bestEpsilon = 0
-    bestF1 = 0
-    F1 = 0
-
+def trainClassifier(Xval, yval):
     yval = yval.ravel()
-    pval = pval.ravel()
-    # ============= YOUR CODE HERE =============
-    # Instructions: Compute the F1 score of choosing epsilon as the
-    #               threshold and place the value in F1. The code at the
-    #               end of the loop will compare the F1 score for this
-    #               choice of epsilon and set it to be the best epsilon if
-    #               it is better than the current choice of epsilon.
-    for epsilon in np.linspace(pval.min(), pval.max(), 1000):
+    
+    outliers_fraction = yval.sum() / yval.size
+    parameters = [{'nu': np.linspace(1, 7, 20) * outliers_fraction},
+                    {'gamma': np.logspace(-3, 2, 50)}]
 
-        ypred = pval < epsilon
-        tp = np.sum(ypred & yval, dtype=float)
-        fp = np.sum(ypred & (yval == 0), dtype=float)
-        fn = np.sum((ypred == 0) & yval, dtype=float)
-        prec = tp / (tp + fp)
-        rec = tp / (tp + fn)
-        F1 = 2 * prec * rec / (prec + rec)
-        if F1 > bestF1:
-            bestF1 = F1
-            bestEpsilon = epsilon
+    clf = None
+    # ============= YOUR CODE HERE =============
+    # Instructions: Use sklearn one class SVM and GridSearchCV
+    #               to find best threshold and best F1 score
     # ===========================================
-    return bestEpsilon, bestF1
+    if clf is None:
+        sys.exit('Model not initialized')
+
+    print('Best estimator')
+    print(clf.best_estimator_)
+
+    yval_pred = clf.decision_function(Xval).ravel()  
+    threshold = stats.scoreatpercentile(yval_pred, 100 * outliers_fraction)      
+    yval_pred = yval_pred < threshold
+    F1 = f1_score(yval, yval_pred)
+
+    return clf, threshold, F1
 
 if __name__ == "__main__":
     plt.close('all')
@@ -91,19 +92,18 @@ if __name__ == "__main__":
 
     raw_input('Program paused. Press enter to continue')
 
-    # =================== Part 3: Find Outliers ===================
+    # =================== Part 3: Find Outliers with SVM ===================
 
-    pval = multivariateGaussian(Xval, mu, sigma2)
+    clf, threshold, F1 = trainClassifier(Xval, yval)
 
-    epsilon, F1 = selectThreshold(yval, pval)
-
-    print('Best epsilon found using cross-validation: %e' % epsilon)
+    print('Best threshold found using SVM: %e' % threshold)
     print('Best F1 on Cross Validation Set:  %f' % F1)
-    print('   (you should see a value epsilon of about 8.99e-05)')
 
-    outliers = np.where(p < epsilon);
+    y_pred = clf.decision_function(X).ravel()    
+    y_pred = y_pred < threshold
 
-    plt.plot(X[outliers, 0], X[outliers, 1], 'ro')
+    plt.figure()
+    visualize_sklearn_clf(X, y_pred, threshold, clf)
 
     raw_input('Program paused. Press enter to continue')
 
@@ -116,20 +116,14 @@ if __name__ == "__main__":
     Xval = mat_content['Xval']
     yval = mat_content['yval']
     
-    mu, sigma2 = estimateGaussian(X)
-    
-    # Training set
-    p = multivariateGaussian(X, mu, sigma2)
-    
-    # Cross-validation set
-    pval = multivariateGaussian(Xval, mu, sigma2)
+    clf, threshold, F1 = trainClassifier(Xval, yval)
 
-    epsilon, F1 = selectThreshold(yval, pval)
+    y_pred = clf.decision_function(X).ravel()    
+    y_pred = y_pred < threshold
 
-    print('Best epsilon found using cross-validation: %e' % epsilon);
-    print('Best F1 on Cross Validation Set:  %f' % F1);
-    print('# Outliers found: %d' % np.sum(p < epsilon));
-    print('   (you should see a value epsilon of about 1.38e-18)');    
+    print('Best threshold found using SVM: %e' % threshold)
+    print('Best F1 on Cross Validation Set:  %f' % F1)
+    print('# Outliers found: %d' % y_pred.sum());
 
     raw_input('Program paused. Press enter to continue')
     plt.close('all')

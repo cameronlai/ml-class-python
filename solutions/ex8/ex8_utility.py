@@ -29,14 +29,6 @@ def visualizeFit(X, mu, Sigma2):
     level = np.power(10.0, np.arange(-20, 0, 3))
     plt.contour(X1, X2, Z, level)
 
-def visualizeFit_sklearn(clf, threshold):
-    XGridVal = np.arange(0, 35, 0.5)
-    X1, X2 = np.meshgrid(XGridVal, XGridVal)
-    Z = clf.decision_function(np.c_[X1.ravel(), X2.ravel()])
-    Z = Z.reshape(X1.shape)
-    plt.title('Outlier detection with elliptical envelope')
-    plt.contourf(X1, X2, Z, levels=np.linspace(Z.min(), threshold, 7), cmap=plt.cm.Blues_r)
-
 def computeNumericalGradient(J, theta):
     numgrad = np.zeros(theta.size)
     perturb = np.zeros(theta.size)
@@ -110,3 +102,31 @@ def normalizeRatings(Y, R):
         Ymean[i] = np.mean(Y[i, idx])
         Ynorm[i, idx] = Y[i, idx] - Ymean[i]
     return Ynorm, Ymean
+
+def plot_datapoints(X):
+    plt.plot(X[:,0], X[:,1], 'bx')
+    plt.xlim([0,30])
+    plt.ylim([0,30])
+    plt.xlabel('Latency (ms)')
+    plt.ylabel('Throughput (mb/s)')
+
+def visualize_sklearn_clf(X, y_pred, threshold, clf, title = None):
+    plot_datapoints(X)
+
+    outliers = np.where(y_pred == 1)
+    plt.plot(X[outliers, 0], X[outliers, 1], 'ro')
+
+    XGridVal = np.arange(0, 35, 0.5)
+    X1, X2 = np.meshgrid(XGridVal, XGridVal)
+    Z = clf.decision_function(np.c_[X1.ravel(), X2.ravel()])
+    Z = Z.reshape(X1.shape)
+    plt.contourf(X1, X2, Z, levels=np.linspace(Z.min(), threshold, 7), cmap=plt.cm.Blues_r)
+
+    if title is None:
+        plt.title('Outlier detection with one class SVM')
+    else:
+        plt.title(title)
+
+
+
+    
